@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A6A4E8"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/background"
+        tools:layout_editor_absoluteX="-90dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/phonechange2"
+        android:layout_width="255dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="132dp"
+        android:background="@drawable/round_white_rect"
+        android:elevation="3dp"
+        android:fontFamily="@font/rubik_regular"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="전화번호 변경"
+        android:textColor="#A6A4E8"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/passwordchange"
+        android:layout_width="255dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="256dp"
+        android:background="@drawable/round_white_rect"
+        android:elevation="3dp"
+        android:fontFamily="@font/rubik_regular"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textStyle="bold"
+        android:text="비밀번호 변경"
+        android:textColor="#A6A4E8"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="255dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_white_rect"
+        android:elevation="3dp"
+        android:fontFamily="@font/rubik_regular"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="로그아웃"
+        android:textStyle="bold"
+        android:textColor="#A6A4E8"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="76dp"
+        android:src="@mipmap/sangsang_turtle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="250dp" />
+
+    <TextView
+        android:id="@+id/madeby"
+        android:layout_width="193dp"
+        android:layout_height="40dp"
+        android:background="@drawable/round_white_rect"
+        android:elevation="3dp"
+        android:fontFamily="@font/rubik_regular"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textStyle="bold"
+        android:text="Made By. 민영 기표 신승"
+        android:textColor="#A6A4E8"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.857" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
