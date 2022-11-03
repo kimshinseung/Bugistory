@@ -66,6 +66,7 @@
         android:id="@+id/chatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:layout_marginStart="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,11 +76,12 @@
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/plusButton"
+        android:id="@+id/friendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/minusButton"
+        app:layout_constraintEnd_toStartOf="@+id/friendpostButton"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toEndOf="@+id/chatButton"
         app:layout_constraintTop_toBottomOf="@+id/email"
@@ -88,8 +90,9 @@
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/minusButton"
+        android:id="@+id/friendpostButton"
         android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,11 +107,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.079"
         app:srcCompat="@mipmap/backbutton"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
