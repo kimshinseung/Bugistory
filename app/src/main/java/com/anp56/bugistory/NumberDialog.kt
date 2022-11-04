@@ -24,7 +24,7 @@ class NumberDialog(context: Context)
         dialog.setCancelable(true)
         dialog.show()
 
-        val edit_phone = dialog.findViewById<EditText>(R.id.pw_edit)
+        val edit_phone = dialog.findViewById<EditText>(R.id.pw_make)
 
         dialog.findViewById<Button>(R.id.cancel_button).setOnClickListener {
             dialog.dismiss()
