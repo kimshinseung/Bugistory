@@ -79,14 +79,14 @@
         android:id="@+id/friendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/friendpostButton"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toEndOf="@+id/chatButton"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.662"
+        app:layout_constraintVertical_bias="0.655"
         app:srcCompat="@mipmap/minusbutton"
-        android:background="@android:color/transparent"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
