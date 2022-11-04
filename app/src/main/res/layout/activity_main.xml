@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@mipmap/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
@@ -13,7 +15,6 @@
         android:layout_weight="1"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
