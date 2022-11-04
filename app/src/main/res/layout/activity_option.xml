@@ -7,19 +7,10 @@
     android:background="#A6A4E8"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/background"
-        tools:layout_editor_absoluteX="-90dp"
-        tools:layout_editor_absoluteY="0dp" />
-
     <TextView
         android:id="@+id/phonechange2"
         android:layout_width="255dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="132dp"
         android:background="@drawable/round_white_rect"
         android:elevation="3dp"
         android:fontFamily="@font/rubik_regular"
@@ -27,31 +18,33 @@
         android:padding="6dp"
         android:text="전화번호 변경"
         android:textColor="#A6A4E8"
-        android:textStyle="bold"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordchange"
+        app:layout_constraintVertical_bias="0.492" />
 
     <TextView
         android:id="@+id/passwordchange"
         android:layout_width="255dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="256dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/round_white_rect"
         android:elevation="3dp"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
         android:padding="6dp"
-        android:textStyle="bold"
         android:text="비밀번호 변경"
         android:textColor="#A6A4E8"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/logout"
@@ -89,22 +82,73 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="250dp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:background="#444370"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/completeButton"
+            android:layout_width="81dp"
+            android:layout_height="47dp"
+            android:background="@android:color/transparent"
+            android:text="완료"
+            android:textColor="@color/browser_actions_bg_grey"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="32.86dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/option"
+            app:layout_constraintHorizontal_bias="0.174"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.491"
+            app:srcCompat="@mipmap/backbutton"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/madeby"
         android:layout_width="193dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/round_white_rect"
         android:elevation="3dp"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
         android:padding="6dp"
-        android:textStyle="bold"
         android:text="Made By. 민영 기표 신승"
         android:textColor="#A6A4E8"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.857" />
-
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
