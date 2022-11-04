@@ -7,64 +7,6 @@
     android:background="#A6A4E8"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/phonechange2"
-        android:layout_width="255dp"
-        android:layout_height="32dp"
-        android:background="@drawable/round_white_rect"
-        android:elevation="3dp"
-        android:fontFamily="@font/rubik_regular"
-        android:gravity="center"
-        android:padding="6dp"
-        android:text="전화번호 변경"
-        android:textColor="#A6A4E8"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordchange"
-        app:layout_constraintVertical_bias="0.492" />
-
-    <TextView
-        android:id="@+id/passwordchange"
-        android:layout_width="255dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/round_white_rect"
-        android:elevation="3dp"
-        android:fontFamily="@font/rubik_regular"
-        android:gravity="center"
-        android:padding="6dp"
-        android:text="비밀번호 변경"
-        android:textColor="#A6A4E8"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <TextView
-        android:id="@+id/logout"
-        android:layout_width="255dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/round_white_rect"
-        android:elevation="3dp"
-        android:fontFamily="@font/rubik_regular"
-        android:gravity="center"
-        android:padding="6dp"
-        android:text="로그아웃"
-        android:textStyle="bold"
-        android:textColor="#A6A4E8"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="250dp"
@@ -133,6 +75,53 @@
             app:srcCompat="@mipmap/backbutton"
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <android.widget.Button
+        android:id="@+id/passwordchange"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/round_white_rect"
+        android:fontFamily="@font/rubik_bold"
+        android:text="비밀번호 변경"
+        android:textColor="#A6A4E8"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <android.widget.Button
+        android:id="@+id/numberchange"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/round_white_rect"
+        android:fontFamily="@font/rubik_bold"
+        android:text="전화번호 변경"
+        android:textColor="#A6A4E8"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordchange"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <android.widget.Button
+        android:id="@+id/logout"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/round_white_rect"
+        android:fontFamily="@font/rubik_bold"
+        android:text="로그아웃"
+        android:textColor="#A6A4E8"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/madeby"
