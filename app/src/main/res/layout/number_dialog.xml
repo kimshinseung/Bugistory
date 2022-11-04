@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/phone_edit"
+        android:id="@+id/pw_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
