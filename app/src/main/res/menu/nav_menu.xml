@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/home_fragment"
-        android:icon="@mipmap/home"
+    <item android:id="@+id/mainFragment"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="home" />
-    <item android:id="@+id/chat_fragment"
-        android:icon="@mipmap/chat"
+    <item android:id="@+id/chatFragment"
+        android:icon="@drawable/ic_baseline_chat_24"
         android:title="chat" />
-    <item android:id="@+id/friends_fragment"
-        android:icon="@mipmap/friends"
+    <item android:id="@+id/friendsFragment"
+        android:icon="@drawable/ic_baseline_people_alt_24"
         android:title="Friend" />
-    <item android:id="@+id/profile_fragment"
-        android:icon="@mipmap/profile"
+    <item android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_baseline_info_24"
         android:title="Profile" />
 </menu>
