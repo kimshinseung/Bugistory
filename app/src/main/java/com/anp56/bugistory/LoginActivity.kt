@@ -15,6 +15,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.findpw.setOnClickListener {
+            val intent =Intent(this,FindpwActivity::class.java)
+            startActivity(intent)
+        }
+
         //debug용 스킵 코드
         startActivity(
             Intent(this,MainActivity::class.java)
@@ -27,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
             doLogin(binding.idEditText.text.toString(),binding.passwordEditText.text.toString())
         }
     }
+
+
+
     fun doLogin(id: String, pass: String)
     {
         Firebase.auth.signInWithEmailAndPassword(id,pass)
