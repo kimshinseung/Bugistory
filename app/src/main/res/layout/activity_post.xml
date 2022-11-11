@@ -45,7 +45,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/switch1"
+            app:layout_constraintBottom_toTopOf="@+id/allopen"
             app:layout_constraintEnd_toStartOf="@+id/completeButton"
             app:layout_constraintHorizontal_bias="0.576"
             app:layout_constraintStart_toEndOf="@+id/backButton"
@@ -53,11 +53,12 @@
             app:layout_constraintVertical_bias="0.736" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/allopen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="전체 공개"
+            android:checked="true"
             android:textColor="@color/white"
             android:textOff="전체 공개"
             android:textOn="나만 보기"

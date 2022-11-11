@@ -30,7 +30,7 @@ class OptionActivity : AppCompatActivity() {
         }
 
         //전화번호 변경
-        binding.numberchange.setOnClickListener{
+       c{
             val dialog=NumberDialog(this)
             dialog.showDialog()
             dialog.setOnClickListener(object : NumberDialog.OnDialogClickListener {
