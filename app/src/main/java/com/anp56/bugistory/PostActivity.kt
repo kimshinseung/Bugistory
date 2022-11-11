@@ -26,7 +26,7 @@ class PostActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener{
             super.onBackPressed()
         }
-        
+
         //전체공개, 나만 보기
         binding.allopen.setOnCheckedChangeListener{ _,isChecked->
             isSeeOnlyMe = !isChecked

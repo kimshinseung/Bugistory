@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
         binding.postRecyclerView.adapter = adapter
 
         binding.createPost.setOnClickListener {
-            val intent = Intent(activity,ChatActivity::class.java)
+            val intent = Intent(activity,PostActivity::class.java)
             startActivity(intent)
         }
 //        postViewModel = ViewModelProvider(this)[PostViewModel::class.java]
