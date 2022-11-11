@@ -23,7 +23,7 @@
         app:layout_constraintGuide_begin="250dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="91dp"
         android:background="#444370"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/mypage"
+            android:id="@+id/my_page_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
@@ -54,22 +54,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.938"
-            app:layout_constraintStart_toEndOf="@+id/mypage"
+            app:layout_constraintStart_toEndOf="@+id/my_page_text_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/bg"
-        android:layout_width="331dp"
-        android:layout_height="136dp"
-        android:src="@drawable/round_white_rect"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_01"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ImageView
         android:id="@+id/profile"
@@ -78,23 +68,23 @@
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_01"
         app:layout_constraintStart_toStartOf="@+id/bg"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginBottom="24dp"
         android:text="Pasta"
-        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintBottom_toTopOf="@+id/phone_text_view"
         app:layout_constraintStart_toEndOf="@+id/profile"
         app:layout_constraintTop_toTopOf="@+id/bg"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/phone"
+        android:id="@+id/phone_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -106,13 +96,13 @@
         app:layout_constraintTop_toTopOf="@+id/bg" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/email_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="28dp"
         android:text="pasta@gmail.com"
         app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toBottomOf="@+id/phone" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

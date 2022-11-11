@@ -24,7 +24,7 @@
         android:elevation="3dp"
         android:fontFamily="@font/rubik_regular"
         android:hint="000-0000-0000"
-        android:inputType="textEmailAddress"
+        android:inputType="phone"
         android:padding="10dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
