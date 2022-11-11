@@ -10,21 +10,18 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-    val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //debug용 스킵 코드
-        startActivity(
-            Intent(this,MainActivity::class.java)
-        )
-        finish()
-        //
-
         println("Login activity activated.")
         binding.loginButton.setOnClickListener {
             doLogin(binding.idEditText.text.toString(),binding.passwordEditText.text.toString())
+        }
+
+        binding.createAccount.setOnClickListener {
+            startActivity(Intent(this,SignInActivity::class.java))
         }
     }
     fun doLogin(id: String, pass: String)

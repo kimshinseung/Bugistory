@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#A6A4E8"
-    tools:context=".LoginActivity">
+    tools:context=".SignInActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -34,7 +34,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/Phone"
+        android:id="@+id/phone_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="@+id/phone_edit_text" />
 
     <EditText
-        android:id="@+id/name_edit_text2"
+        android:id="@+id/name_edit_text"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="160dp"
@@ -64,7 +64,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -72,11 +72,11 @@
         android:fontFamily="@font/rubik_bold"
         android:text="이름"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/name_edit_text2"
-        app:layout_constraintStart_toStartOf="@+id/name_edit_text2" />
+        app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/name_edit_text" />
 
     <EditText
-        android:id="@+id/password_edit_text2"
+        android:id="@+id/password_confirm_edit_text"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="264dp"
@@ -90,11 +90,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/email_edit_text"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/password_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -134,11 +134,11 @@
         android:fontFamily="@font/rubik_bold"
         android:text="이메일"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/id_edit_text"
-        app:layout_constraintStart_toStartOf="@id/id_edit_text" />
+        app:layout_constraintBottom_toTopOf="@id/email_edit_text"
+        app:layout_constraintStart_toStartOf="@id/email_edit_text" />
 
     <EditText
-        android:id="@+id/id_edit_text"
+        android:id="@+id/email_edit_text"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="88dp"
@@ -156,7 +156,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/textview2"
+        android:id="@+id/password_confirm_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -164,8 +164,8 @@
         android:fontFamily="@font/rubik_bold"
         android:text="비밀번호 확인"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/password_edit_text2"
-        app:layout_constraintStart_toStartOf="@+id/password_edit_text2" />
+        app:layout_constraintBottom_toTopOf="@+id/password_confirm_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/password_confirm_edit_text" />
 
     <EditText
         android:id="@+id/password_edit_text"
@@ -182,11 +182,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/email_edit_text"
         tools:ignore="TouchTargetSizeCheck" />
 
     <android.widget.Button
-        android:id="@+id/loginButton"
+        android:id="@+id/signin_button"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="21dp"
@@ -198,7 +198,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text2"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_edit_text"
         tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
