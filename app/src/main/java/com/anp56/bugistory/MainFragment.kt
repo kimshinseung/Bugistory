@@ -3,6 +3,7 @@ package com.anp56.bugistory
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,12 @@ import com.anp56.bugistory.post.PostData
 import com.anp56.bugistory.post.PostViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class MainFragment : Fragment() {
     private val db: FirebaseFirestore = Firebase.firestore
@@ -25,72 +29,74 @@ class MainFragment : Fragment() {
     private val userCollectionRef = db.collection("userdata")
     lateinit var mainContext : Context;
     lateinit var postViewModel : PostViewModel
+    lateinit var binding: FragmentMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentMainBinding.bind(view)
-        val posts = mutableListOf<PostData>()
-        postCollectionRef.get().addOnSuccessListener {
-            //var formatter = SimpleDateFormat("YYYY년 MM월 DD일 HH시 mm분")
-            for (data in it){
-//                var username : String? = null;
-//                userCollectionRef.document(data.get("uid").toString()).get()
-//                    .addOnSuccessListener { userdata ->
-//                        username = userdata.get("username").toString()
-//                    }
-//                    .addOnFailureListener {
-//                        username = null
-//                    }
-//                if (username == null)
-//                    continue
-                val postData = PostData(
-                    data.id.toString(),
-                    data.get("uid").toString(),
-                    data.get("time").toString(),
-                    data.get("content").toString(),
-                    (data.get("like") as MutableList<*>).size,
-                    (data.get("comment") as HashMap<*, *>).size
-                )
-                posts.add(postData)
-            }
-        }
-            .addOnFailureListener {
-                Toast.makeText(activity,"불러오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
-            }
-        val adapter = PostAdapter(mainContext, posts)
+        binding = FragmentMainBinding.bind(view)
+
+        val adapter = PostAdapter(mainContext, mutableListOf())
         binding.postRecyclerView.adapter = adapter
 
+        updatePostList()
+
+        postViewModel.postData.observe(viewLifecycleOwner) {
+            binding.postRecyclerView.adapter = PostAdapter(mainContext, it)
+        }
+
+        binding.swipeLayout.setOnRefreshListener {
+            updatePostList()
+            binding.swipeLayout.isRefreshing = false
+        }
         binding.createPost.setOnClickListener {
             val intent = Intent(activity,PostActivity::class.java)
             startActivity(intent)
         }
-//        postViewModel = ViewModelProvider(this)[PostViewModel::class.java]
-//        postViewModel.postData.observe(viewLifecycleOwner){ posts ->
-//            val adapter = PostAdapter(mainContext,posts)
-//            binding.postRecyclerView.adapter = adapter
-//        }
-//        var count = 0;
-//        binding.createPost.setOnClickListener {
-//            var cont = ""
-//            for (i in 0..count){
-//                cont += "글이 얼마나 적힐지 테스트"
-//            }
-//            postViewModel.addPostData(
-//                PostData(
-//                    0,
-//                    "유저 고유 아이디 번호가 들어간다",
-//                    "테스트용 $count",
-//                    "2022년 11월 04시 7시 ${count}분",
-//                    cont,
-//                    count,
-//                    count
-//                )
-//            )
-//            count++;
-//        }
+    }
+    //Update post list and query data
+    private fun updatePostList(){
+        postCollectionRef.orderBy("time",Query.Direction.DESCENDING).get().addOnSuccessListener {
+            val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
+            val postList = mutableListOf<PostData>()
+            for (data in it){
+                try {
+                    val postData = PostData(
+                        data.id,
+                        "알수없음",
+                        formatter.format(Date(data.get("time").toString().toLong())),
+                        data.get("content").toString(),
+                        (data.get("like") as MutableList<String>),
+                        (data.get("comment") as HashMap<String, String>)
+                    )
+                    userCollectionRef.document(data.get("uid").toString()).get()
+                        .addOnSuccessListener { userdata ->
+                            postData.username = userdata["name"].toString()
+                            postList.add(postData)
+                            postViewModel.setPostList(postList)
+                        }
+                        .addOnFailureListener {
+                            postList.add(postData)
+                            postViewModel.setPostList(postList)
+                        }
+                }
+                catch (_ : Exception){
+                    Log.d("Update Post","Post data parse failed.")
+                }
+
+            }
+        }
+            .addOnFailureListener {
+                Toast.makeText(activity, "불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updatePostList()
     }
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -17,19 +17,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="250dp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:background="#444370"
+        android:layout_height="60dp"
+        android:background="@color/default_dark_ui_color"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="설정"
-            android:textColor="@color/white"
+            android:textColor="@color/default_super_bright_ui_color"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,32 +41,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <TextView
             android:id="@+id/completeButton"
             android:layout_width="81dp"
             android:layout_height="47dp"
-            android:background="@android:color/transparent"
+            android:gravity="center"
             android:text="완료"
-            android:textColor="@color/browser_actions_bg_grey"
-            android:textSize="19sp"
+            android:textColor="@color/default_super_bright_ui_color"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/backButton"
             android:layout_width="32.86dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/option"
-            app:layout_constraintHorizontal_bias="0.202"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.491"
-            app:srcCompat="@mipmap/backbutton"
+            app:srcCompat="@drawable/ic_baseline_chevron_left_40"
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

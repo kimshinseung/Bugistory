@@ -12,17 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bugistory"
         tools:targetApi="31">
-        <activity android:name=".SignInActivity"
+        <activity
+            android:name=".PostViewerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
         </activity>
-        <activity android:name=".PostActivity"
+        <activity
+            android:name=".SignInActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PostActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".OptionActivity"

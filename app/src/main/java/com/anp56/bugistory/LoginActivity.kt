@@ -14,17 +14,18 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        if (Firebase.auth.currentUser != null){
+            //Toast.makeText(this,"Current user is ${Firebase.auth.uid}",Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this,MainActivity::class.java)
+            )
+            finish()
+        }
         binding.findpw.setOnClickListener {
             val intent =Intent(this,FindpwActivity::class.java)
             startActivity(intent)
         }
-
-        //debug용 스킵 코드
-        //startActivity(
-        //    Intent(this,MainActivity::class.java)
-        //)
-        //finish()
-        println("Login activity activated.")
         binding.loginButton.setOnClickListener {
             doLogin(binding.idEditText.text.toString(),binding.passwordEditText.text.toString())
         }
