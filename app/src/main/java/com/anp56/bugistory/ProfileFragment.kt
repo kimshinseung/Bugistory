@@ -42,8 +42,7 @@ import kotlin.collections.HashMap
 
 class ProfileFragment : Fragment()
 {
-    lateinit var mainContext : Context;
-    lateinit var binding1: FragmentMainBinding
+    lateinit var mainContext : Context
     lateinit var postViewModel : PostViewModel
     private val db: FirebaseFirestore = Firebase.firestore
     lateinit var storage:FirebaseStorage
@@ -59,11 +58,18 @@ class ProfileFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentProfileBinding.bind(view)
-//        val adapter = PostAdapter(mainContext, mutableListOf())
-//        binding.postRecyclerView.adapter = adapter
+        val adapter = PostAdapter(mainContext, mutableListOf())
+        binding.postRecyclerView.adapter = adapter
         updatePostList()
 
+        postViewModel.postData.observe(viewLifecycleOwner) {
+            binding.postRecyclerView.adapter = PostAdapter(mainContext, it)
+        }
 
+        binding.swipeLayout.setOnRefreshListener {
+            updatePostList()
+            binding.swipeLayout.isRefreshing = false
+        }
 
         userdataCollectionRef.document(Firebase.auth.uid.toString()).get()
             .addOnSuccessListener {
@@ -124,7 +130,7 @@ class ProfileFragment : Fragment()
                         formatter.format(Date(data.get("time").toString().toLong())),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
-                        (data.get("comment") as HashMap<String, String>)
+                        (data.get("comment") as MutableList<Map<String,String>>)
                     )
                     userCollectionRef.document(data.get("uid").toString()).get()
                         .addOnSuccessListener { userdata ->
@@ -152,6 +158,7 @@ class ProfileFragment : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        mainContext = container!!.context;
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 }
