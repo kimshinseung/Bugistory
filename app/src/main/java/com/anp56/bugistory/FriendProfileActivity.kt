@@ -11,27 +11,30 @@ class FriendProfileActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private val userCollectionRef = db.collection("userdata")
     private val binding by lazy { ActivityProfileFriendBinding.inflate(layoutInflater) }
+    private val isFriend = false
+    private var uid = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        
         val name = intent.getStringExtra("name")
-        val phonenumber = intent.getStringExtra("phonenumber")
-        val profile = intent.getIntExtra("profile",-1)
+        val phoneNumber = intent.getStringExtra("phonenumber")
+
         val email = intent.getStringExtra("Email")
-        binding.profileimage.setImageResource(profile)
-        binding.phone.text = phonenumber
+        //binding.profileimage.setImageResource(profile)
+        uid = intent.getStringExtra("profile") + ""
+
+        binding.phone.text = phoneNumber
         binding.name.text = name
         binding.email.text = email
 
         binding.friendButton.setImageResource(if(isFriend) R.mipmap.friend_minus_button else R.mipmap.friend_add_button)
 
-        userCollectionRef.document(currentFriendUid).get()
+        userCollectionRef.document(uid+"").get()
             .addOnSuccessListener {
                 try {
                     binding.email.text = it.get("email").toString()
                     binding.name.text = it.get("name").toString()
-                    binding.phone.text = it.get("pthone_number").toString()
+                    binding.phone.text = it.get("phone_number").toString()
                 }
                 catch (_ : Exception){
                     //ignored
@@ -41,9 +44,6 @@ class FriendProfileActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this,"프로필 정보를 불러오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
             }
-
-        val profile = intent.getIntExtra("profile",-1)
-        binding.profileImage.setImageResource(profile)
 
         binding.backButton.setOnClickListener{
             super.onBackPressed()
@@ -58,9 +58,5 @@ class FriendProfileActivity : AppCompatActivity() {
         binding.friendPostButton.setOnClickListener {
 
         }
-    }
-    companion object{
-        lateinit var currentFriendUid : String
-        var isFriend = false
     }
 }

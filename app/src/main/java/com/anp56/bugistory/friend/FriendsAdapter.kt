@@ -43,7 +43,7 @@ class FriendsAdapter(private var friendsData:MutableList<Data>) : RecyclerView.A
         holder.binding.itemName.text = data.name
         holder.binding.itemPhonenumber.text = data.phonenumber
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView?.context, FriendProfileActivity::class.java)
+            val intent = Intent(holder.itemView.context, FriendProfileActivity::class.java)
             intent.putExtra("name",data.name)
             intent.putExtra("profile",data.profile)
             intent.putExtra("phonenumber",data.phonenumber)
