@@ -14,6 +14,15 @@ class FriendProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        
+        val name = intent.getStringExtra("name")
+        val phonenumber = intent.getStringExtra("phonenumber")
+        val profile = intent.getIntExtra("profile",-1)
+        val email = intent.getStringExtra("Email")
+        binding.profileimage.setImageResource(profile)
+        binding.phone.text = phonenumber
+        binding.name.text = name
+        binding.email.text = email
 
         binding.friendButton.setImageResource(if(isFriend) R.mipmap.friend_minus_button else R.mipmap.friend_add_button)
 
