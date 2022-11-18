@@ -68,6 +68,7 @@
                 <ImageView
                     android:id="@+id/profile_background"
                     android:layout_width="match_parent"
+                    android:scaleType="center"
                     android:layout_height="match_parent"
                     tools:src="@tools:sample/avatars" />
             </androidx.cardview.widget.CardView>
