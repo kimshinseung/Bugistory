@@ -15,13 +15,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //debug용 스킵 코드
-        startActivity(
-            Intent(this,MainActivity::class.java)
-        )
-        finish()
-        //
-
         println("Login activity activated.")
         binding.loginButton.setOnClickListener {
             doLogin(binding.idEditText.text.toString(),binding.passwordEditText.text.toString())
