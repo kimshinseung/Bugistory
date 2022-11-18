@@ -80,6 +80,8 @@ class ProfileFragment : Fragment()
             .addOnFailureListener {
                 Toast.makeText(activity,"프로필 정보를 가져오지 못했습니다.",Toast.LENGTH_SHORT).show();
             }
+
+
         val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
         displayImageRef(imageRef,profile_background)
         binding.settingButton.setOnClickListener {
@@ -110,24 +112,23 @@ class ProfileFragment : Fragment()
 
         }
     }
-    private fun displayImageRef(imageRef: StorageReference?, view: ImageView) {
-        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+    private fun displayImageRef(imageRef: StorageReference, view: ImageView) {
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
             val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
             view.setImageBitmap(bmp)
-        }?.addOnFailureListener {
+        }.addOnFailureListener {
 // Failed to download the image
         }
     }
     private fun updatePostList(){
-        postCollectionRef.orderBy("time", Query.Direction.DESCENDING).get().addOnSuccessListener {
-            val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
+        postCollectionRef.whereEqualTo("uid",Firebase.auth.uid).get().addOnSuccessListener {
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {
                     val postData = PostData(
                         data.id,
                         "알수없음",
-                        formatter.format(Date(data.get("time").toString().toLong())),
+                        data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
                         (data.get("comment") as MutableList<Map<String,String>>)
@@ -151,6 +152,7 @@ class ProfileFragment : Fragment()
         }
             .addOnFailureListener {
                 Toast.makeText(activity, "불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                it.printStackTrace()
             }
     }
     override fun onCreateView(
