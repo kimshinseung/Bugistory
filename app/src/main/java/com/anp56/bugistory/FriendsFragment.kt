@@ -11,10 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.EditText
-import android.widget.SearchView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.compose.ui.text.toLowerCase
 import androidx.core.widget.addTextChangedListener
@@ -37,7 +34,6 @@ class FriendsFragment : Fragment() {
     private val userdataCollectionRef = db.collection("userdata")
 
     private var itemlist: MutableList<Data> = mutableListOf()
-    private var mAdapter: FriendsAdapter? = null
 
     companion object{
         fun newInstance() : FriendsFragment {
@@ -61,14 +57,15 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View?
     {
+
         val view = inflater.inflate(R.layout.fragment_friends,container,false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val editText = view.findViewById<EditText>(R.id.search_friend)
-        mAdapter = FriendsAdapter((itemlist as ArrayList<Data>))
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView!!.adapter = mAdapter
+        val adapter = FriendsAdapter(mutableListOf())
+        recyclerView!!.adapter = adapter
+
         val friendsList = mutableListOf<Data>()
-        userdataCollectionRef.get()?.addOnSuccessListener {
+        userdataCollectionRef.get().addOnSuccessListener {
             for (data in it) {
                 try {
                     val friendData = Data(
@@ -77,8 +74,7 @@ class FriendsFragment : Fragment() {
                         data.get("phone_number").toString(),
                         data.get("email").toString()
                     )
-                    var item = friendData
-                    friendsList.add(item)
+                    friendsList.add(friendData)
                 } catch (_: Exception) {
                     Log.d("Update Post", "Post data parse failed.")
                 }
@@ -89,21 +85,21 @@ class FriendsFragment : Fragment() {
 
         //recyclerView.adapter = FriendsAdapter(DataList)
 
-        editText.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //recyclerView!!.adapter = mAdapter
-            }
-
-            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //recyclerView!!.adapter = mAdapter
-            }
-
-            override fun afterTextChanged(charSequence: Editable?) {
-                mAdapter!!.filter.filter(charSequence)
-                //recyclerView!!.adapter = mAdapter
-            }
-
-        })
+//        editText.addTextChangedListener(object : TextWatcher{
+//            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                //recyclerView!!.adapter = mAdapter
+//            }
+//
+//            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                //recyclerView!!.adapter = mAdapter
+//            }
+//
+//            override fun afterTextChanged(charSequence: Editable?) {
+//                mAdapter!!.filter.filter(charSequence)
+//                //recyclerView!!.adapter = mAdapter
+//            }
+//
+//        })
 
 
 
@@ -115,6 +111,34 @@ class FriendsFragment : Fragment() {
 
         return view/*inflater.inflate(R.layout.fragment_friends, container, false)*/
     }
-
+//    override fun getFilter(): Filter {
+//        return object : Filter() {
+//            override fun performFiltering(constraint: CharSequence?): FilterResults {
+//                val charString = constraint.toString()
+//                if (charString.isNullOrBlank()) {
+//                    current = DataList
+//                } else {
+//                    val filteredList = ArrayList<Data>()
+//
+//                    for (data in DataList){
+//                        if(data.name.contains(charString) || data.phonenumber.contains(charString)||data.email.contains(charString)) {
+//                            filteredList.add(data)
+//                        }
+//                    }
+//                    current = filteredList
+//                }
+//                val filterResults = FilterResults()
+//                filterResults.values = current
+//
+//                return filterResults
+//            }
+//
+//            override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
+//                current = filterResults?.values as ArrayList<Data>
+//                notifyDataSetChanged()
+//            }
+//        }
+//
+//    }
 
 }

@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anp56.bugistory.FriendProfileActivity
 import com.anp56.bugistory.R
+import com.anp56.bugistory.databinding.ItemFriendBinding
+import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
 import com.anp56.bugistory.post.PostData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -26,37 +28,20 @@ import kotlin.collections.HashMap
 data class Data (val profile :String, val name : String, val phonenumber : String, val email : String)
 
 
-class FriendsAdapter(
-    private var DataList:MutableList<Data>
-) : RecyclerView.Adapter<FriendsAdapter.CustomViewHolder>(), Filterable {
+class FriendsAdapter(private var friendsData:MutableList<Data>) : RecyclerView.Adapter<FriendsAdapter.CustomViewHolder>(){
 
-
-
-    var current: List<Data>? = null
-
-    class CustomViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        val profile_picture : ImageView = v.item_image
-        val friend_name : TextView = v.item_name
-        val phonenum : TextView = v.item_phonenumber
-        val friend_email : TextView? = null
-
-    }
-
-
+    class CustomViewHolder(val binding : ItemFriendBinding): RecyclerView.ViewHolder(binding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        return CustomViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_friend, parent,false
-            )
-        )
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemFriendBinding.inflate(layoutInflater, parent,false)
+        return CustomViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val data: Data = current!![position]
+        val data =  friendsData[position]
         //holder.profile_picture.setImageResource(data.profile)
-        holder.friend_name.text = data.name
-        holder.phonenum.text = data.phonenumber
-        holder.friend_email?.text = data.email
+        holder.binding.itemName.text = data.name
+        holder.binding.itemPhonenumber.text = data.phonenumber
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, FriendProfileActivity::class.java)
             intent.putExtra("name",data.name)
@@ -66,38 +51,7 @@ class FriendsAdapter(
             ContextCompat.startActivity(holder.itemView.context, intent, null)
 
         }
-
     }
 
-    override fun getItemCount() = current!!.size
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charString = constraint.toString()
-                if (charString.isNullOrBlank()) {
-                    current = DataList
-                } else {
-                    val filteredList = ArrayList<Data>()
-
-                    for (data in DataList){
-                        if(data.name.contains(charString) || data.phonenumber.contains(charString)||data.email.contains(charString)) {
-                            filteredList.add(data)
-                        }
-                    }
-                    current = filteredList
-                }
-                val filterResults = FilterResults()
-                filterResults.values = current
-
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
-                current = filterResults?.values as ArrayList<Data>
-                notifyDataSetChanged()
-            }
-        }
-
-    }
+    override fun getItemCount() = friendsData.size
 }
