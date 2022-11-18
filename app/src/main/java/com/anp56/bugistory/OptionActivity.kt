@@ -59,6 +59,7 @@ class OptionActivity : AppCompatActivity() {
         //로그아웃 버튼
         binding.logout.setOnClickListener {
             val intent= Intent(this,LoginActivity::class.java)
+            Firebase.auth.signOut()
             startActivity(intent)
         }
         //완료 버튼
