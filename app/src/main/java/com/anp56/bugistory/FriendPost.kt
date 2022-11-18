@@ -1,16 +1,11 @@
 package com.anp56.bugistory
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.anp56.bugistory.databinding.ActivityFriendpostBinding
-import com.anp56.bugistory.databinding.FragmentProfileBinding
 import com.anp56.bugistory.post.PostAdapter
 import com.anp56.bugistory.post.PostData
 import com.anp56.bugistory.post.PostViewModel
@@ -19,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class FriendPost : AppCompatActivity(){
     lateinit var postViewModel : PostViewModel
@@ -29,10 +23,18 @@ class FriendPost : AppCompatActivity(){
     private val userCollectionRef = db.collection("userdata")
     private val userdataCollectionRef = db.collection("userdata")
     private val binding by lazy { ActivityFriendpostBinding.inflate(layoutInflater) }
-
+    lateinit var frienduid:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val secondIntent = intent
+
+        frienduid=secondIntent.getStringExtra("uid")+""
+
+        //실험할려고 만든 코드
+        Toast.makeText(this,frienduid,Toast.LENGTH_SHORT).show()
+
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         val adapter = PostAdapter(this, mutableListOf())
         binding.postRecyclerView.adapter = adapter
@@ -55,7 +57,7 @@ class FriendPost : AppCompatActivity(){
     }
 
     private fun updatePostList(){
-        postCollectionRef.whereEqualTo("uid",Firebase.auth.uid).get().addOnSuccessListener {
+        postCollectionRef.whereEqualTo("uid",frienduid).get().addOnSuccessListener {
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {

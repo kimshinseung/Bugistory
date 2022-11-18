@@ -24,6 +24,9 @@ class FriendProfileActivity : AppCompatActivity() {
         //binding.profileimage.setImageResource(profile)
         uid = intent.getStringExtra("profile") + ""
 
+        val myIntent = Intent(this, FriendPost::class.java)
+        myIntent.putExtra("uid", uid)
+
         binding.phone.text = phoneNumber
         binding.name.text = name
         binding.email.text = email
@@ -51,6 +54,7 @@ class FriendProfileActivity : AppCompatActivity() {
         }
 
         binding.chatButton.setOnClickListener {
+
         }
 
         binding.friendButton.setOnClickListener {
