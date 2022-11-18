@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#A6A4E8"
-    tools:context=".LoginActivity">
+    tools:context=".FriendProfileActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imagesView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/background"
@@ -62,67 +62,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone" />
 
-    <ImageButton
-        android:id="@+id/chatButton"
+    <ImageView
+        android:id="@+id/chat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginBottom="60dp"
+        android:src="@mipmap/chatbutton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.658"
-        app:srcCompat="@mipmap/chatbutton"
-        android:background="@android:color/transparent"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintEnd_toStartOf="@id/friend_button"/>
 
-    <ImageButton
-        android:id="@+id/friendButton"
+    <ImageView
+        android:id="@+id/friend_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/friendpostButton"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toEndOf="@+id/chatButton"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.655"
-        app:srcCompat="@mipmap/minusbutton"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toEndOf="@id/chat_button"
+        app:layout_constraintEnd_toStartOf="@id/friend_post_Button"
+        app:srcCompat="@mipmap/friend_add_button" />
 
-    <ImageButton
-        android:id="@+id/friendpostButton"
+    <ImageView
+        android:id="@+id/friend_post_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
+        app:srcCompat="@mipmap/friendpostbutton"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.66"
-        app:srcCompat="@mipmap/friendpostbutton"
-        android:background="@android:color/transparent"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toEndOf="@id/friend_button"/>
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.079"
-        app:srcCompat="@mipmap/backbutton"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     <ImageView
-        android:id="@+id/profileimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_chevron_left_40"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:src="@drawable/image1"
+        android:transitionName="image"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
