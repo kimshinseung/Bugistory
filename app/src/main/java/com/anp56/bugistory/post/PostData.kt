@@ -6,5 +6,5 @@ data class PostData(
     val date: String,
     val content: String,
     val like: MutableList<String> = mutableListOf(),
-    val comment: HashMap<String, String> = hashMapOf()
+    val comment: MutableList<Map<String,String>> = mutableListOf()
 )

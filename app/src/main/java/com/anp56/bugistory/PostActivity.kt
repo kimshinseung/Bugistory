@@ -36,7 +36,7 @@ class PostActivity : AppCompatActivity() {
             val uid=Firebase.auth.uid
             val time= System.currentTimeMillis()
             val like= mutableListOf<String>()
-            val comment= hashMapOf<String,String>()
+            val comment= mutableListOf<Map<String,String>>()
             val see= isSeeOnlyMe
             val postinf= hashMapOf(
                 "content" to content,
@@ -51,9 +51,6 @@ class PostActivity : AppCompatActivity() {
             }
             super.onBackPressed()
         }
-        
-        
-
     }
 
 }
