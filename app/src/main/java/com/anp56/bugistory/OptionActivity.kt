@@ -34,6 +34,7 @@ class OptionActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     val email= it.get("email").toString()
                     FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    Toast.makeText(this,"이메일로 비밀번호 초기화 링크를 보냈습니다.", Toast.LENGTH_SHORT).show();
                 }
                 .addOnFailureListener {
                     Toast.makeText(this,"이메일을 찾지 못했습니다.", Toast.LENGTH_SHORT).show();
@@ -48,7 +49,7 @@ class OptionActivity : AppCompatActivity() {
             dialog.setOnClickListener(object : NumberDialog.OnDialogClickListener {
                 override fun onClicked(phone: String)
                 {
-                    userdataCollectionRef.document(Firebase.auth.uid.toString()).update("phone",phone)
+                    userdataCollectionRef.document(Firebase.auth.uid.toString()).update("phone_number",phone)
                         .addOnSuccessListener {
                             Toast.makeText(applicationContext,"전화번호를 변경했습니다",Toast.LENGTH_SHORT).show()
                         }
@@ -59,6 +60,8 @@ class OptionActivity : AppCompatActivity() {
         //로그아웃 버튼
         binding.logout.setOnClickListener {
             val intent= Intent(this,LoginActivity::class.java)
+            Firebase.auth.signOut()
+            Toast.makeText(applicationContext,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
         //완료 버튼
