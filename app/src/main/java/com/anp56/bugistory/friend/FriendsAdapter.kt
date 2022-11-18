@@ -34,7 +34,7 @@ class FriendsAdapter(val DataList:ArrayList<Data>) : RecyclerView.Adapter<Custom
             val intent = Intent(holder.itemView?.context, FriendProfileActivity::class.java)
             intent.putExtra("name",DataList[position].name)
             intent.putExtra("profile",DataList[position].profile)
-            intent.putExtra("phonenumber",DataList[position].phonenumber)
+            intent.putExtra("phone_number",DataList[position].phonenumber)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
 
         }

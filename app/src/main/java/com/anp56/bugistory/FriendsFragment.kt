@@ -36,16 +36,12 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
-
         val view = inflater.inflate(R.layout.fragment_friends,container,false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val editText = view.findViewById<EditText>(R.id.search_friend)
         editText.addTextChangedListener()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = FriendsAdapter(DataList)
-
-
 
         val spaceDecoration = RecyclerDecoration(40)
         recyclerView.addItemDecoration(spaceDecoration)

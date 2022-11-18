@@ -60,17 +60,16 @@ class MainFragment : Fragment() {
     //Update post list and query data
     private fun updatePostList(){
         postCollectionRef.orderBy("time",Query.Direction.DESCENDING).get().addOnSuccessListener {
-            val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {
                     val postData = PostData(
                         data.id,
                         "알수없음",
-                        formatter.format(Date(data.get("time").toString().toLong())),
+                        data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
-                        (data.get("comment") as HashMap<String, String>)
+                        (data.get("comment") as MutableList<Map<String,String>>)
                     )
                     userCollectionRef.document(data.get("uid").toString()).get()
                         .addOnSuccessListener { userdata ->

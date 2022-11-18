@@ -56,7 +56,6 @@ class ProfileFragment : Fragment()
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentProfileBinding.bind(view)

@@ -37,4 +37,11 @@ class PostViewModel : ViewModel() {
             postData.value = postList
         }
     }
+    fun getPostByIndex(index: Int) : PostData?{
+        var post : PostData? = null
+        viewModelScope.launch {
+            post = postData.value?.get(index)
+        }
+        return post
+    }
 }

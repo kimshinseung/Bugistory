@@ -12,6 +12,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PostAdapter(private val context : Context,private val posts : List<PostData>) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -28,17 +30,17 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
 
-
+        val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
 
         holder.binding.userName.text = post.username
-        holder.binding.dateText.text = post.date
+        holder.binding.dateText.text = formatter.format(Date(post.date.toLong()))
         holder.binding.postContent.text = post.content
         holder.binding.commentCount.text = post.comment.size.toString()
         holder.binding.likeCount.text = post.like.size.toString()
 
         //글 자세히 보기 버튼
         holder.binding.postContent.setOnClickListener {
-            PostViewerActivity.currentPostIndex = position
+            PostViewerActivity.currentPost = post
             context.startActivity(Intent(context,PostViewerActivity::class.java))
         }
         //좋아요 버튼 눌렸을 때 처리
@@ -62,9 +64,13 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         }
 
         holder.binding.commentButton.setOnClickListener {
-            Toast.makeText(context,"댓글 창을 누르셨습니다.",Toast.LENGTH_SHORT).show()
+            PostViewerActivity.currentPost = post
+            context.startActivity(Intent(context,PostViewerActivity::class.java))
         }
 
+        holder.binding.postMenu.setOnClickListener {
+
+        }
     }
 
     override fun getItemCount(): Int {
