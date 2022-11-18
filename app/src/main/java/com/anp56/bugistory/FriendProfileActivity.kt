@@ -1,5 +1,6 @@
 package com.anp56.bugistory
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -55,8 +56,10 @@ class FriendProfileActivity : AppCompatActivity() {
         binding.friendButton.setOnClickListener {
 
         }
-        binding.friendPostButton.setOnClickListener {
 
+        binding.friendPostButton.setOnClickListener {
+            val intent = Intent(this,FriendPost::class.java)
+            startActivity(intent)
         }
     }
 }
