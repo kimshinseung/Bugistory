@@ -28,12 +28,14 @@ class FriendPost : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val secondIntent = intent
 
+        val secondIntent = intent
         frienduid=secondIntent.getStringExtra("uid")+""
 
-        //실험할려고 만든 코드
-        Toast.makeText(this,frienduid,Toast.LENGTH_SHORT).show()
+//        //실험할려고 만든 코드
+//        if(frienduid!==null) {
+//            Toast.makeText(this, frienduid, Toast.LENGTH_SHORT).show()
+//        }
 
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         val adapter = PostAdapter(this, mutableListOf())
