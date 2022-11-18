@@ -16,9 +16,11 @@ class FriendProfileActivity : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val phonenumber = intent.getStringExtra("phonenumber")
         val profile = intent.getIntExtra("profile",-1)
+        val email = intent.getStringExtra("Email")
         binding.profileimage.setImageResource(profile)
         binding.phone.text = phonenumber
         binding.name.text = name
+        binding.email.text = email
 
 
         binding.backButton.setOnClickListener{
@@ -28,11 +30,6 @@ class FriendProfileActivity : AppCompatActivity() {
         binding.chatButton.setOnClickListener {
         }
 
-        //debug용 스킵 코드
-        //startActivity(
-        //    Intent(this,MainActivity::class.java)
-        //)
-        //finish()
         binding.friendButton.setOnClickListener {
 
         }
