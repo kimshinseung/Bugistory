@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bugistory"
         tools:targetApi="31">
+        <activity android:name=".FriendProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity
             android:name=".PostViewerActivity"
             android:exported="false">

@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
             val intent =Intent(this,FindpwActivity::class.java)
             startActivity(intent)
         }
+        println("Login activity activated.")
         binding.loginButton.setOnClickListener {
             doLogin(binding.idEditText.text.toString(),binding.passwordEditText.text.toString())
         }
