@@ -44,10 +44,12 @@ class SignInActivity : AppCompatActivity() {
                         val uid = user.uid
                         val name = binding.nameEditText.text.toString()
                         val phoneNumber = binding.phoneEditText.text.toString()
+                        val userFriendsList = mutableListOf<String>()
                         val userdata = hashMapOf(
                             "name" to name,
                             "phone_number" to phoneNumber,
-                            "email" to email
+                            "email" to email,
+                            "friends" to userFriendsList
                         )
                         userdataCollectionRef.document(uid).set(userdata).addOnFailureListener {
                             Toast.makeText(this,"유저 데이터를 초기화하는데 실패했습니다.",Toast.LENGTH_SHORT).show()

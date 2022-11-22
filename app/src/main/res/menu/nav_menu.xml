@@ -7,6 +7,9 @@
     <item android:id="@+id/chatFragment"
         android:icon="@drawable/ic_baseline_chat_24"
         android:title="chat" />
+    <item android:id="@+id/myFriendFragment"
+        android:icon="@drawable/ic_baseline_people_alt_24"
+        android:title="MyFriend" />
     <item android:id="@+id/friendsFragment"
         android:icon="@drawable/ic_baseline_people_alt_24"
         android:title="Friend" />

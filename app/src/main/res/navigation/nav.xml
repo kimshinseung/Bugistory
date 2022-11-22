@@ -25,4 +25,9 @@
         android:name="com.anp56.bugistory.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/myFriendFragment"
+        android:name="com.anp56.bugistory.MyFriendFragment"
+        android:label="fragment_my_friend"
+        tools:layout="@layout/fragment_my_friend" />
 </navigation>
