@@ -3,6 +3,7 @@ package com.anp56.bugistory
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anp56.bugistory.databinding.ActivitySigninBinding
@@ -22,12 +23,16 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.signinButton.setOnClickListener {
-            Log.d("Doing login", "test" );
-            if (Pattern.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+\$",binding.emailEditText.text.toString())){
+            if (binding.emailEditText.text.isBlank() || binding.nameEditText.text.isBlank() ||
+                binding.passwordEditText.text.isBlank() || binding.passwordConfirmEditText.text.isBlank()){
+                Toast.makeText(this,"빈칸이 남아있습니다. 빈칸을 모두 채워주세요.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.text).matches()){
                 Toast.makeText(this,"올바른 이메일 형태가 아닙니다.",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (Pattern.matches("^\\d{3}-\\d{3,4}-\\d{4}\$",binding.phoneEditText.text.toString())){
+            if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", binding.phoneEditText.text)){
                 Toast.makeText(this,"올바른 전화번호 형태가 아닙니다.",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -56,13 +61,8 @@ class SignInActivity : AppCompatActivity() {
                         }
                     }
                     else{
-                        Log.d("Sign in task","회원가입 실패");
                         Toast.makeText(this,"회원가입에 실패하셨습니다.",Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(
-                        Intent(this,LoginActivity::class.java)
-                    )
-                    finish()
                 }
         }
     }
