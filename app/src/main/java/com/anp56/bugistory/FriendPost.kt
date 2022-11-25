@@ -59,7 +59,7 @@ class FriendPost : AppCompatActivity(){
     }
 
     private fun updatePostList(){
-        postCollectionRef.whereEqualTo("uid",frienduid).get().addOnSuccessListener {
+        postCollectionRef.whereEqualTo("uid",frienduid).whereEqualTo("see","-ALL-").get().addOnSuccessListener {
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {

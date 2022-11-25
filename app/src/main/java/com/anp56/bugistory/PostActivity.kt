@@ -37,7 +37,7 @@ class PostActivity : AppCompatActivity() {
             val time = System.currentTimeMillis()
             val like= mutableListOf<String>()
             val comment= mutableListOf<Map<String,String>>()
-            val see = if (isSeeOnlyMe) Firebase.auth.uid else "-ALL-"
+            val see = if (isSeeOnlyMe) "-ALL-" else Firebase.auth.uid
             val postinf= hashMapOf(
                 "content" to content,
                 "uid" to uid,
