@@ -59,7 +59,7 @@ class MainFragment : Fragment() {
     }
     //Update post list and query data
     private fun updatePostList(){
-        postCollectionRef.get().addOnSuccessListener {
+        postCollectionRef.whereIn("see", arrayListOf("-ALL-",Firebase.auth.uid)).get().addOnSuccessListener {
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {

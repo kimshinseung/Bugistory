@@ -72,6 +72,10 @@ class PostViewerActivity : AppCompatActivity() {
         }
 
         binding.createComment.setOnClickListener {
+            if (binding.commentContent.text.isBlank()){
+                Toast.makeText(this,"입력하지 않으셨습니다",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val comment = hashMapOf<String,String>()
             comment["uid"] = Firebase.auth.uid.toString()
             comment["comment"] = binding.commentContent.text.toString()
