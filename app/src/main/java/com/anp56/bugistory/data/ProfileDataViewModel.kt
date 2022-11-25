@@ -32,7 +32,7 @@ class ProfileDataViewModel : ViewModel() {
         viewModelScope.launch {
             phoneNumber.value = number
             userDataCollectionRef.document(Firebase.auth.uid.toString()).update("phone_number",number)
-            Toast.makeText(context,"전화번호르 변경하였습니다.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"전화번호를 변경하였습니다.",Toast.LENGTH_SHORT).show()
         }
     }
     fun removeData(){
