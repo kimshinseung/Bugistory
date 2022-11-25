@@ -66,13 +66,24 @@ class FriendPost : AppCompatActivity(){
                     val postData = PostData(
                         data.id,
                         data.get("uid").toString(),
+                        "알 수 없음",
                         data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
                         (data.get("comment") as MutableList<Map<String,String>>)
                     )
-                    postList.add(postData)
-                    postViewModel.setPostList(postList)
+                    userCollectionRef.document(data.get("uid").toString()).get()
+                        .addOnSuccessListener { userdata ->
+                            postData.username = userdata["name"].toString()
+                            postList.add(postData)
+                            postList.sortByDescending { it -> it.date }
+                            postViewModel.setPostList(postList)
+                        }
+                        .addOnFailureListener {
+                            postList.add(postData)
+                            postList.sortByDescending { it -> it.date }
+                            postViewModel.setPostList(postList)
+                        }
                 }
                 catch (_ : Exception){
                     Log.d("Update Post","Post data parse failed.")

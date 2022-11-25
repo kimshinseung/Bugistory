@@ -47,19 +47,18 @@ class ProfileFragment : Fragment()
     lateinit var postViewModel : PostViewModel
     lateinit var profileDataViewModel: ProfileDataViewModel
     private val db: FirebaseFirestore = Firebase.firestore
-    lateinit var storage:FirebaseStorage
+    private val storage = Firebase.storage
     private val  postCollectionRef = db.collection("post")
     private val userdataCollectionRef = db.collection("userdata")
+    lateinit var binding : FragmentProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        storage=Firebase.storage
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         profileDataViewModel = ViewModelProvider(this).get(ProfileDataViewModel::class.java)
-
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentProfileBinding.bind(view)
+        binding = FragmentProfileBinding.bind(view)
         val adapter = PostAdapter(mainContext, mutableListOf())
         binding.postRecyclerView.adapter = adapter
         updatePostList()
@@ -84,11 +83,12 @@ class ProfileFragment : Fragment()
         }
 
         val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
-        displayImageRef(imageRef,profile_background)
+        displayImageRef(imageRef,binding.profileImage)
         binding.settingButton.setOnClickListener {
             startActivity(Intent(activity,OptionActivity::class.java))
         }
-        binding.profileBackground.setOnClickListener{
+
+        binding.profileImage.setOnClickListener{
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             startActivityForResult(intent, 1)
@@ -107,7 +107,7 @@ class ProfileFragment : Fragment()
                 storage.reference.child("photo").child(fileName)
                     .putFile(dataURI).addOnCompleteListener{
                         val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
-                        displayImageRef(imageRef,profile_background)
+                        displayImageRef(imageRef,binding.profileImage)
                     }
             }
 
@@ -118,7 +118,7 @@ class ProfileFragment : Fragment()
             val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
             view.setImageBitmap(bmp)
         }.addOnFailureListener {
-// Failed to download the image
+
         }
     }
     private fun updatePostList(){
@@ -129,13 +129,24 @@ class ProfileFragment : Fragment()
                     val postData = PostData(
                         data.id,
                         data.get("uid").toString(),
+                        "알 수 없음",
                         data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
                         (data.get("comment") as MutableList<Map<String,String>>)
                     )
-                    postList.add(postData)
-                    postViewModel.setPostList(postList)
+                    userdataCollectionRef.document(data.get("uid").toString()).get()
+                        .addOnSuccessListener { userdata ->
+                            postData.username = userdata["name"].toString()
+                            postList.add(postData)
+                            postList.sortByDescending { it -> it.date }
+                            postViewModel.setPostList(postList)
+                        }
+                        .addOnFailureListener {
+                            postList.add(postData)
+                            postList.sortByDescending { it -> it.date }
+                            postViewModel.setPostList(postList)
+                        }
                 }
                 catch (_ : Exception){
                     Log.d("Update Post","Post data parse failed.")

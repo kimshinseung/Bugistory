@@ -1,6 +1,7 @@
 package com.anp56.bugistory.friend
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anp56.bugistory.FriendProfileActivity
 import com.anp56.bugistory.R
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.item_friend.view.*
 import kotlin.collections.ArrayList
 
@@ -21,7 +24,7 @@ class FriendsAdapter(
 ) : RecyclerView.Adapter<FriendsAdapter.CustomViewHolder>(), Filterable {
 
     var current: List<FriendData>? = null
-
+    val storage = Firebase.storage
     inner class CustomViewHolder(v: View): RecyclerView.ViewHolder(v) {
         val profile_picture : ImageView = v.item_image
         val friend_name : TextView = v.item_name
@@ -55,7 +58,11 @@ class FriendsAdapter(
             intent.putExtra("phonenumber",data.phonenumber)
             intent.putExtra("Email",data.email)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
-
+        }
+        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${data.profile}.png")
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            holder.profile_picture.setImageBitmap(bmp)
         }
 
     }

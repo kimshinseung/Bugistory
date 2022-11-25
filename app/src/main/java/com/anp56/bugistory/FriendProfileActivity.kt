@@ -1,17 +1,23 @@
 package com.anp56.bugistory
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anp56.bugistory.databinding.ActivityProfileFriendBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class FriendProfileActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private val userCollectionRef = db.collection("userdata")
+    private val storage = Firebase.storage
     private val binding by lazy { ActivityProfileFriendBinding.inflate(layoutInflater) }
     private var isFriend = false
     private var uid = ""
@@ -61,12 +67,11 @@ class FriendProfileActivity : AppCompatActivity() {
                     Toast.makeText(this,"프로필 정보를 불러오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
                 }
             }
+
+
+
         binding.backButton.setOnClickListener{
             super.onBackPressed()
-        }
-
-        binding.chatButton.setOnClickListener {
-
         }
 
         binding.friendButton.setOnClickListener {
@@ -92,6 +97,11 @@ class FriendProfileActivity : AppCompatActivity() {
             val myIntent = Intent(this, FriendPost::class.java)
             myIntent.putExtra("uid", uid)
             startActivity(myIntent)
+        }
+        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${uid}.png")
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            binding.profileImage.setImageBitmap(bmp)
         }
     }
 }

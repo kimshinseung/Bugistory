@@ -1,5 +1,7 @@
 package com.anp56.bugistory.data
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,10 +28,11 @@ class ProfileDataViewModel : ViewModel() {
             }
         }
     }
-    fun updatePhoneNumber(number : String){
+    fun updatePhoneNumber(context : Context, number : String){
         viewModelScope.launch {
             phoneNumber.value = number
             userDataCollectionRef.document(Firebase.auth.uid.toString()).update("phone_number",number)
+            Toast.makeText(context,"전화번호르 변경하였습니다.",Toast.LENGTH_SHORT).show()
         }
     }
     fun removeData(){

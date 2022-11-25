@@ -2,22 +2,26 @@ package com.anp56.bugistory.post
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.anp56.bugistory.PostViewerActivity
+import com.anp56.bugistory.R
 import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PostAdapter(private val context : Context,private val posts : List<PostData>) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private val db: FirebaseFirestore = Firebase.firestore
+    private val storage = Firebase.storage
     private val postCollectionRef = db.collection("post")
     private val userCollectionRef = db.collection("userdata")
     inner class PostViewHolder(val binding : ItemPostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
@@ -32,16 +36,17 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         val post = posts[position]
 
         val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
-        holder.binding.userName.text = ""
+        holder.binding.userName.text = post.username
         holder.binding.dateText.text = formatter.format(Date(post.date.toLong()))
         holder.binding.postContent.text = post.content
         holder.binding.commentCount.text = post.comment.size.toString()
         holder.binding.likeCount.text = post.like.size.toString()
-        userCollectionRef.document(post.username).get()
-            .addOnSuccessListener { userdata ->
-                post.username = userdata["name"].toString()
-                holder.binding.userName.text = post.username
-            }
+        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${post.uid}.png")
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            holder.binding.userImage.setImageBitmap(bmp)
+        }
+
         //글 자세히 보기 버튼
         holder.binding.postContent.setOnClickListener {
             PostViewerActivity.currentPost = post
@@ -70,10 +75,6 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         holder.binding.commentButton.setOnClickListener {
             PostViewerActivity.currentPost = post
             context.startActivity(Intent(context,PostViewerActivity::class.java))
-        }
-
-        holder.binding.postMenu.setOnClickListener {
-
         }
     }
 

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.anp56.bugistory.data.ProfileDataViewModel
 import com.anp56.bugistory.databinding.ActivityOptionBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -16,12 +18,13 @@ import com.google.firebase.ktx.Firebase
 class OptionActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = Firebase.firestore
     private val  userdataCollectionRef = db.collection("userdata")
+    private lateinit var profileDataViewModel : ProfileDataViewModel
     private lateinit var binding: ActivityOptionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityOptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        profileDataViewModel = ViewModelProvider(this).get(ProfileDataViewModel::class.java)
         //뒤로가기버튼
         binding.backButton.setOnClickListener{
             super.onBackPressed()
@@ -49,10 +52,8 @@ class OptionActivity : AppCompatActivity() {
             dialog.setOnClickListener(object : NumberDialog.OnDialogClickListener {
                 override fun onClicked(phone: String)
                 {
-                    userdataCollectionRef.document(Firebase.auth.uid.toString()).update("phone_number",phone)
-                        .addOnSuccessListener {
-                            Toast.makeText(applicationContext,"전화번호를 변경했습니다",Toast.LENGTH_SHORT).show()
-                        }
+                    profileDataViewModel.updatePhoneNumber(applicationContext,phone)
+                    profileDataViewModel.refreshData()
                 }
 
             })

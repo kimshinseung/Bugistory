@@ -1,5 +1,6 @@
 package com.anp56.bugistory
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -17,12 +18,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
 class PostViewerActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = Firebase.firestore
+    private val storage = Firebase.storage
     private val  postCollectionRef = db.collection("post")
     private val userdataCollectionRef = db.collection("userdata")
     private val commentData = MutableLiveData<List<ChatData>>()
@@ -44,7 +47,11 @@ class PostViewerActivity : AppCompatActivity() {
         binding.userName.text = currentPost.username
         binding.dateText.text = currentPost.date
         binding.likeCount.text = currentPost.like.size.toString()
-
+        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${currentPost.uid}.png")
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            binding.userImage.setImageBitmap(bmp)
+        }
         binding.likeButton.setOnClickListener {
             val uid = Firebase.auth.uid.toString()
             if (currentPost.like.contains(uid)){

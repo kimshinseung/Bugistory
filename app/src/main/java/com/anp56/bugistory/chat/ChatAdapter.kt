@@ -1,6 +1,7 @@
 package com.anp56.bugistory.chat
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.anp56.bugistory.databinding.ItemMyChatRecyclerViewBinding
 import com.anp56.bugistory.databinding.ItemOpponentChatRecyclerViewBinding
 import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class ChatAdapter(private val context: Context,private val chats : List<ChatData>) : RecyclerView.Adapter<ViewHolder>() {
-
+    private val storage = Firebase.storage
     inner class OpponentChatViewHolder(val binding : ItemOpponentChatRecyclerViewBinding) : ViewHolder(binding.root)
     inner class MyChatViewHolder(val binding : ItemMyChatRecyclerViewBinding) : ViewHolder(binding.root)
 
@@ -39,6 +42,15 @@ class ChatAdapter(private val context: Context,private val chats : List<ChatData
         val viewHolder = holder as OpponentChatViewHolder
         viewHolder.binding.chatContent.text = chat.chatContent
         viewHolder.binding.opponentName.text = chat.userName
+        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${chat.userId}.png")
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            holder.binding.chatOpponentImage.setImageBitmap(bmp)
+        }
+            .addOnFailureListener {
+
+            }
+
     }
 
     override fun getItemCount(): Int {
