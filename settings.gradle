@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Bugistory"
 include ':app'
+include ':app:bugiwear'
