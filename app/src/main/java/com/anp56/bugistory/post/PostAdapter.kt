@@ -18,7 +18,8 @@ import java.util.*
 class PostAdapter(private val context : Context,private val posts : List<PostData>) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private val db: FirebaseFirestore = Firebase.firestore
-    private val  postCollectionRef = db.collection("post")
+    private val postCollectionRef = db.collection("post")
+    private val userCollectionRef = db.collection("userdata")
     inner class PostViewHolder(val binding : ItemPostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -31,13 +32,16 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         val post = posts[position]
 
         val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
-
-        holder.binding.userName.text = post.username
+        holder.binding.userName.text = ""
         holder.binding.dateText.text = formatter.format(Date(post.date.toLong()))
         holder.binding.postContent.text = post.content
         holder.binding.commentCount.text = post.comment.size.toString()
         holder.binding.likeCount.text = post.like.size.toString()
-
+        userCollectionRef.document(post.username).get()
+            .addOnSuccessListener { userdata ->
+                post.username = userdata["name"].toString()
+                holder.binding.userName.text = post.username
+            }
         //글 자세히 보기 버튼
         holder.binding.postContent.setOnClickListener {
             PostViewerActivity.currentPost = post

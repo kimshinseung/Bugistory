@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 class PostActivity : AppCompatActivity() {
     private var isSeeOnlyMe = true
     private val db: FirebaseFirestore= Firebase.firestore
-    private val  postCollectionRef = db.collection("post")
+    private val postCollectionRef = db.collection("post")
     private lateinit var binding: ActivityPostBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class PostActivity : AppCompatActivity() {
         binding.completeButton.setOnClickListener{
             val content= binding.content.text.toString()
             val uid=Firebase.auth.uid
-            val time= System.currentTimeMillis()
+            val time = System.currentTimeMillis()
             val like= mutableListOf<String>()
             val comment= mutableListOf<Map<String,String>>()
             val see= isSeeOnlyMe

@@ -65,27 +65,18 @@ class MainFragment : Fragment() {
                 try {
                     val postData = PostData(
                         data.id,
-                        "알수없음",
+                        data.get("uid").toString(),
                         data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
                         (data.get("comment") as MutableList<Map<String,String>>)
                     )
-                    userCollectionRef.document(data.get("uid").toString()).get()
-                        .addOnSuccessListener { userdata ->
-                            postData.username = userdata["name"].toString()
-                            postList.add(postData)
-                            postViewModel.setPostList(postList)
-                        }
-                        .addOnFailureListener {
-                            postList.add(postData)
-                            postViewModel.setPostList(postList)
-                        }
+                    postList.add(postData)
+                    postViewModel.setPostList(postList)
                 }
                 catch (_ : Exception){
                     Log.d("Update Post","Post data parse failed.")
                 }
-
             }
         }
             .addOnFailureListener {

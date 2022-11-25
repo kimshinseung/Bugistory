@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.registerForActivityResult
 import androidx.lifecycle.ViewModelProvider
+import com.anp56.bugistory.data.ProfileDataViewModel
 import com.anp56.bugistory.databinding.FragmentMainBinding
 import com.anp56.bugistory.databinding.FragmentProfileBinding
 import com.anp56.bugistory.post.PostAdapter
@@ -44,15 +45,16 @@ class ProfileFragment : Fragment()
 {
     lateinit var mainContext : Context
     lateinit var postViewModel : PostViewModel
+    lateinit var profileDataViewModel: ProfileDataViewModel
     private val db: FirebaseFirestore = Firebase.firestore
     lateinit var storage:FirebaseStorage
     private val  postCollectionRef = db.collection("post")
-    private val userCollectionRef = db.collection("userdata")
     private val userdataCollectionRef = db.collection("userdata")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         storage=Firebase.storage
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
+        profileDataViewModel = ViewModelProvider(this).get(ProfileDataViewModel::class.java)
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,22 +67,21 @@ class ProfileFragment : Fragment()
         postViewModel.postData.observe(viewLifecycleOwner) {
             binding.postRecyclerView.adapter = PostAdapter(mainContext, it)
         }
+        profileDataViewModel.username.observe(viewLifecycleOwner){
+            binding.nameTextView.text = it
+        }
+        profileDataViewModel.email.observe(viewLifecycleOwner){
+            binding.emailTextView.text = it
+        }
+        profileDataViewModel.phoneNumber.observe(viewLifecycleOwner){
+            binding.phoneTextView.text = it
+        }
+        profileDataViewModel.refreshData()
 
         binding.swipeLayout.setOnRefreshListener {
             updatePostList()
             binding.swipeLayout.isRefreshing = false
         }
-
-        userdataCollectionRef.document(Firebase.auth.uid.toString()).get()
-            .addOnSuccessListener {
-                binding.nameTextView.text = it.get("name").toString()
-                binding.phoneTextView.text = it.get("phone_number").toString()
-                binding.emailTextView.text = it.get("email").toString()
-            }
-            .addOnFailureListener {
-                Toast.makeText(activity,"프로필 정보를 가져오지 못했습니다.",Toast.LENGTH_SHORT).show();
-            }
-
 
         val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
         displayImageRef(imageRef,profile_background)
@@ -127,22 +128,14 @@ class ProfileFragment : Fragment()
                 try {
                     val postData = PostData(
                         data.id,
-                        "알수없음",
+                        data.get("uid").toString(),
                         data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
                         (data.get("comment") as MutableList<Map<String,String>>)
                     )
-                    userCollectionRef.document(data.get("uid").toString()).get()
-                        .addOnSuccessListener { userdata ->
-                            postData.username = userdata["name"].toString()
-                            postList.add(postData)
-                            postViewModel.setPostList(postList)
-                        }
-                        .addOnFailureListener {
-                            postList.add(postData)
-                            postViewModel.setPostList(postList)
-                        }
+                    postList.add(postData)
+                    postViewModel.setPostList(postList)
                 }
                 catch (_ : Exception){
                     Log.d("Update Post","Post data parse failed.")

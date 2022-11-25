@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.anp56.bugistory.chat.ChatAdapter
+import com.anp56.bugistory.chat.ChatData
 import com.anp56.bugistory.comment.CommentAdapter
 import com.anp56.bugistory.databinding.ActivityPostViewerBinding
 import com.anp56.bugistory.post.PostAdapter
@@ -23,17 +25,17 @@ class PostViewerActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = Firebase.firestore
     private val  postCollectionRef = db.collection("post")
     private val userdataCollectionRef = db.collection("userdata")
-    private val commentData = MutableLiveData<List<Pair<String,String>>>()
-    private val commentDataBase = mutableListOf<Pair<String,String>>()
+    private val commentData = MutableLiveData<List<ChatData>>()
+    private val commentDataBase = mutableListOf<ChatData>()
     val binding by lazy { ActivityPostViewerBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val adapter = CommentAdapter(this, mutableListOf())
+        val adapter = ChatAdapter(this, mutableListOf())
         binding.commentRecyclerView.adapter = adapter
         commentData.observe(this) {
-            val adapter = CommentAdapter(this, it)
+            val adapter = ChatAdapter(this, it)
             binding.commentRecyclerView.adapter = adapter
         }
 
@@ -92,11 +94,15 @@ class PostViewerActivity : AppCompatActivity() {
         //Toast.makeText(this,"${currentPost.comment[0].size}",Toast.LENGTH_SHORT).show()
         for (data in currentPost.comment){
             val currentUid = data["uid"]
-            var username = ""
             userdataCollectionRef.document(currentUid!!).get()
                 .addOnSuccessListener { userdata ->
-                    username = userdata["name"].toString()
-                    commentDataBase.add(Pair(username,data["comment"]!!))
+                    var comment = ChatData(
+                        currentUid,
+                        userdata["name"].toString(),
+                        data["comment"].toString(),
+                        true
+                    )
+                    commentDataBase.add(comment)
                     commentData.value = commentDataBase
                 }
         }
