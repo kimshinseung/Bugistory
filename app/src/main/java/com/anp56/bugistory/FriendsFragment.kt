@@ -23,7 +23,6 @@ import com.google.firebase.ktx.Firebase
 //import com.anp56.bugistory.friend.FriendsAdapter
 import kotlin.collections.ArrayList
 class FriendsFragment : Fragment() {
-    private var itemlist: MutableList<FriendData> = mutableListOf()
     private var mAdapter: FriendsAdapter? = null
     var db : FirebaseFirestore = Firebase.firestore
     private val userdataCollectionRef = db.collection("userdata")
@@ -68,8 +67,7 @@ class FriendsFragment : Fragment() {
                     Log.d("Update Post", "Post data parse failed.")
                 }
             }
-            itemlist = friendsList
-            mAdapter = FriendsAdapter(itemlist as ArrayList<FriendData>)
+            mAdapter = FriendsAdapter(friendsList)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView!!.adapter = mAdapter
 

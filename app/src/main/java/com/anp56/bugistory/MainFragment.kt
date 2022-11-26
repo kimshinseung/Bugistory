@@ -14,6 +14,7 @@ import com.anp56.bugistory.databinding.FragmentMainBinding
 import com.anp56.bugistory.post.PostAdapter
 import com.anp56.bugistory.post.PostData
 import com.anp56.bugistory.post.PostViewModel
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -98,6 +99,7 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updatePostList()
+        ImageCacheManager.updateImage()
     }
     override fun onCreateView(
         inflater: LayoutInflater,

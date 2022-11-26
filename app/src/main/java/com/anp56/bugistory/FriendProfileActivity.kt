@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anp56.bugistory.databinding.ActivityProfileFriendBinding
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -28,14 +29,16 @@ class FriendProfileActivity : AppCompatActivity() {
         val phoneNumber = intent.getStringExtra("phonenumber")
 
         val email = intent.getStringExtra("Email")
-        //binding.profileimage.setImageResource(profile)
         uid = intent.getStringExtra("profile") + ""
 
 
         binding.phone.text = phoneNumber
         binding.name.text = name
         binding.email.text = email
+        Toast.makeText(this,uid,Toast.LENGTH_SHORT).show()
 
+        binding.profileImage.setImageResource(R.mipmap.default_user_image)
+        ImageCacheManager.requestImage(uid,binding.profileImage)
         binding.friendButton.setImageResource(if(isFriend) R.mipmap.friend_minus_button else R.mipmap.friend_add_button)
 
         userCollectionRef.document(uid+"").get()
@@ -97,11 +100,6 @@ class FriendProfileActivity : AppCompatActivity() {
             val myIntent = Intent(this, FriendPost::class.java)
             myIntent.putExtra("uid", uid)
             startActivity(myIntent)
-        }
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${uid}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            binding.profileImage.setImageBitmap(bmp)
         }
     }
 }

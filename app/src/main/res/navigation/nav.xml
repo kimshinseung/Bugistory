@@ -10,11 +10,13 @@
         android:name="com.anp56.bugistory.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <!--
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.anp56.bugistory.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+     -->
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.anp56.bugistory.FriendsFragment"

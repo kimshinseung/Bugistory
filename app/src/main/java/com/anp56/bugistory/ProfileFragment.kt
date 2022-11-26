@@ -26,6 +26,7 @@ import com.anp56.bugistory.databinding.FragmentProfileBinding
 import com.anp56.bugistory.post.PostAdapter
 import com.anp56.bugistory.post.PostData
 import com.anp56.bugistory.post.PostViewModel
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -82,8 +83,8 @@ class ProfileFragment : Fragment()
             binding.swipeLayout.isRefreshing = false
         }
 
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
-        displayImageRef(imageRef,binding.profileImage)
+        binding.profileImage.setImageBitmap(ImageCacheManager.requestImage(Firebase.auth.uid.toString()))
+
         binding.settingButton.setOnClickListener {
             startActivity(Intent(activity,OptionActivity::class.java))
         }
@@ -106,18 +107,9 @@ class ProfileFragment : Fragment()
             if (dataURI != null) {
                 storage.reference.child("photo").child(fileName)
                     .putFile(dataURI).addOnCompleteListener{
-                        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${Firebase.auth.uid}.png")
-                        displayImageRef(imageRef,binding.profileImage)
+                        binding.profileImage.setImageBitmap(ImageCacheManager.requestImage(Firebase.auth.uid.toString()))
                     }
             }
-
-        }
-    }
-    private fun displayImageRef(imageRef: StorageReference, view: ImageView) {
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            view.setImageBitmap(bmp)
-        }.addOnFailureListener {
 
         }
     }

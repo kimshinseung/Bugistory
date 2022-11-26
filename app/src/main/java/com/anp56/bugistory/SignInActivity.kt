@@ -1,7 +1,7 @@
 package com.anp56.bugistory
 
-import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 import java.util.regex.Pattern
 
 
@@ -61,13 +62,19 @@ class SignInActivity : AppCompatActivity() {
                         userdataCollectionRef.document(uid).set(userdata).addOnFailureListener {
                             Toast.makeText(this,"유저 데이터를 초기화하는데 실패했습니다.",Toast.LENGTH_SHORT).show()
                         }
-                        var fileName="${Firebase.auth.uid}.png"
-                        //storage.reference.child("photo").child(fileName).putFile(Bitmap.)
+                        val default = BitmapFactory.decodeResource(this.resources,R.mipmap.default_user_image)
+                        storage.reference.child("photo").child("${Firebase.auth.uid}.png").putBytes(bitmapToByteArray(default))
+                        finish()
                     }
                     else{
                         Toast.makeText(this,"회원가입에 실패하셨습니다.",Toast.LENGTH_SHORT).show()
                     }
                 }
         }
+    }
+    private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        return stream.toByteArray()
     }
 }

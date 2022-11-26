@@ -102,7 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:src="@mipmap/default_user_image"
-        android:transitionName="image"/>
+        tools:src="@mipmap/default_user_image"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

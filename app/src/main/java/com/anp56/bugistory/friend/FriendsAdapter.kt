@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anp56.bugistory.FriendProfileActivity
 import com.anp56.bugistory.R
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.item_friend.view.*
@@ -59,12 +60,7 @@ class FriendsAdapter(
             intent.putExtra("Email",data.email)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${data.profile}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            holder.profile_picture.setImageBitmap(bmp)
-        }
-
+        ImageCacheManager.requestImage(data.profile,holder.profile_picture)
     }
 
     override fun getItemCount() = current!!.size

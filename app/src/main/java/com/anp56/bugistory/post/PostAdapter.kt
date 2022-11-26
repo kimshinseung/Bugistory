@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anp56.bugistory.PostViewerActivity
 import com.anp56.bugistory.R
 import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -41,12 +42,7 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         holder.binding.postContent.text = post.content
         holder.binding.commentCount.text = post.comment.size.toString()
         holder.binding.likeCount.text = post.like.size.toString()
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${post.uid}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            holder.binding.userImage.setImageBitmap(bmp)
-        }
-
+        ImageCacheManager.requestImage(post.uid,holder.binding.userImage)
         //글 자세히 보기 버튼
         holder.binding.postContent.setOnClickListener {
             PostViewerActivity.currentPost = post
