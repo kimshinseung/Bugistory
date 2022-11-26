@@ -1,7 +1,7 @@
 package com.postive.bugiwear.post
 
 import android.content.Context
-import android.graphics.BitmapFactory
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,12 +15,10 @@ import com.postive.bugiwear.databinding.ItemPostRecyclerViewBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PostAdapter(private val context : Context,private val posts : List<PostData>) :
+class PostAdapter(private val context : Context, private val posts : List<PostData>) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private val db: FirebaseFirestore = Firebase.firestore
-    private val storage = Firebase.storage
     private val postCollectionRef = db.collection("post")
-    private val userCollectionRef = db.collection("userdata")
     inner class PostViewHolder(val binding : ItemPostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -38,40 +36,27 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
         holder.binding.postContent.text = post.content
         holder.binding.commentCount.text = post.comment.size.toString()
         holder.binding.likeCount.text = post.like.size.toString()
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${post.uid}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            holder.binding.userImage.setImageBitmap(bmp)
-        }
-
+        ImageCacheManager.requestImage(post.uid,holder.binding.userImage)
         //글 자세히 보기 버튼
-        holder.binding.postContent.setOnClickListener {
-//            PostViewerActivity.currentPost = post
-//            context.startActivity(Intent(context,PostViewerActivity::class.java))
-        }
+
         //좋아요 버튼 눌렸을 때 처리
         holder.binding.likeButton.setOnClickListener {
             val uid = Firebase.auth.uid.toString()
             if (post.like.contains(uid)){
-                Toast.makeText(context,"이미 좋아요하신 글 입니다.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"이미 좋아요하신 글 입니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             post.like.add(uid)
             postCollectionRef.document(post.id).update("like",post.like)
                 .addOnSuccessListener {
-                    Toast.makeText(context,"이 글을 좋아요 하셨습니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"이 글을 좋아요 하셨습니다.", Toast.LENGTH_SHORT).show()
                     holder.binding.likeCount.text = post.like.size.toString()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(context,"좋아요에 실패했습니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"좋아요에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     post.like.remove(uid)
                     holder.binding.likeCount.text = post.like.size.toString()
                 }
-        }
-
-        holder.binding.commentButton.setOnClickListener {
-//            PostViewerActivity.currentPost = post
-//            context.startActivity(Intent(context,PostViewerActivity::class.java))
         }
     }
 

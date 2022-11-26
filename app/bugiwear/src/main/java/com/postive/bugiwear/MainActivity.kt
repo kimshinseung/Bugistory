@@ -1,6 +1,7 @@
 package com.postive.bugiwear
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.postive.bugiwear.post.PostAdapter
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.postive.bugiwear.databinding.ActivityMainBinding
+import com.postive.bugiwear.post.ImageCacheManager
 
 class MainActivity : Activity() {
     private val db: FirebaseFirestore = Firebase.firestore
@@ -23,6 +25,14 @@ class MainActivity : Activity() {
         setContentView(binding.root)
         binding.postList.adapter = PostAdapter(this, mutableListOf())
         updatePostList()
+        binding.settingButton.setOnClickListener {
+            startActivity(Intent(this,SettingActivity::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ImageCacheManager.updateImage()
     }
     private fun updatePostList(){
 

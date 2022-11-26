@@ -64,6 +64,7 @@ class OptionActivity : AppCompatActivity() {
             Firebase.auth.signOut()
             Toast.makeText(applicationContext,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
             startActivity(intent)
+            finish()
         }
         //완료 버튼
         binding.completeButton.setOnClickListener {
