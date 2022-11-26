@@ -21,6 +21,14 @@ class MainActivity : Activity() {
     private val postDataList = mutableListOf<PostData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val db = Firebase.firestore
+        val usersRef = db.collection("userdata")
+        usersRef.get().addOnSuccessListener {
+            for (data in it){
+                ImageCacheManager.requestImage(data.id)
+            }
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.postList.adapter = PostAdapter(this, mutableListOf())

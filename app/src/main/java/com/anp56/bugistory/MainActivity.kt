@@ -11,7 +11,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.anp56.bugistory.data.ProfileDataViewModel
 import com.anp56.bugistory.databinding.ActivityMainBinding
 import com.anp56.bugistory.post.PostViewModel
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
@@ -25,6 +28,14 @@ class MainActivity : AppCompatActivity() {
             PostViewModel::class.java)
         profileDataViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             ProfileDataViewModel::class.java)
+
+        val db = Firebase.firestore
+        val usersRef = db.collection("userdata")
+        usersRef.get().addOnSuccessListener {
+            for (data in it){
+                ImageCacheManager.requestImage(data.id)
+            }
+        }
 
         // setup actionbar with nav controller to show up button
         val navHostFragment =

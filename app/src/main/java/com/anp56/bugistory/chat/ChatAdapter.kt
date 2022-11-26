@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.anp56.bugistory.databinding.ItemMyChatRecyclerViewBinding
 import com.anp56.bugistory.databinding.ItemOpponentChatRecyclerViewBinding
 import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
@@ -42,14 +43,7 @@ class ChatAdapter(private val context: Context,private val chats : List<ChatData
         val viewHolder = holder as OpponentChatViewHolder
         viewHolder.binding.chatContent.text = chat.chatContent
         viewHolder.binding.opponentName.text = chat.userName
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${chat.userId}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            holder.binding.chatOpponentImage.setImageBitmap(bmp)
-        }
-            .addOnFailureListener {
-
-            }
+        ImageCacheManager.requestImage(chat.userId,holder.binding.chatOpponentImage)
 
     }
 

@@ -58,6 +58,10 @@ class MyFriendFragment : Fragment() {
             }
     }
 
+    override fun onResume() {
+        super.onResume()
+        createFriendList()
+    }
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         createFriendList()

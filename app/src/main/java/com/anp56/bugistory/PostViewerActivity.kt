@@ -14,6 +14,7 @@ import com.anp56.bugistory.databinding.ActivityPostViewerBinding
 import com.anp56.bugistory.post.PostAdapter
 import com.anp56.bugistory.post.PostData
 import com.anp56.bugistory.post.PostViewModel
+import com.anp56.bugistory.tools.ImageCacheManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -41,17 +42,13 @@ class PostViewerActivity : AppCompatActivity() {
             val adapter = ChatAdapter(this, it)
             binding.commentRecyclerView.adapter = adapter
         }
-
+        val formatter = SimpleDateFormat("YYYY년 MM월 dd일 HH시 mm분")
         //Toast.makeText(this,"${currentPostIndex}의 글을 표시합니다.",Toast.LENGTH_SHORT).show()
         binding.postContent.text = currentPost.content
         binding.userName.text = currentPost.username
-        binding.dateText.text = currentPost.date
+        binding.dateText.text = formatter.format(currentPost.date.toLong())
         binding.likeCount.text = currentPost.like.size.toString()
-        val imageRef=storage.getReferenceFromUrl("gs://bugistory.appspot.com/photo/${currentPost.uid}.png")
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
-            binding.userImage.setImageBitmap(bmp)
-        }
+        ImageCacheManager.requestImage(currentPost.uid,binding.userImage)
         binding.likeButton.setOnClickListener {
             val uid = Firebase.auth.uid.toString()
             if (currentPost.like.contains(uid)){
