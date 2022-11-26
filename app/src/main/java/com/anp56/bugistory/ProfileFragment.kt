@@ -107,7 +107,7 @@ class ProfileFragment : Fragment()
             if (dataURI != null) {
                 storage.reference.child("photo").child(fileName)
                     .putFile(dataURI).addOnCompleteListener{
-                        binding.profileImage.setImageBitmap(ImageCacheManager.requestImage(Firebase.auth.uid.toString()))
+                        ImageCacheManager.updateTargetImage(Firebase.auth.uid.toString(),binding.profileImage)
                     }
             }
 
