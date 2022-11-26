@@ -35,7 +35,7 @@ class FriendProfileActivity : AppCompatActivity() {
         binding.phone.text = phoneNumber
         binding.name.text = name
         binding.email.text = email
-        Toast.makeText(this,uid,Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,uid,Toast.LENGTH_SHORT).show()
 
         binding.profileImage.setImageResource(R.mipmap.default_user_image)
         ImageCacheManager.requestImage(uid,binding.profileImage)
