@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var profileDataViewModel: ProfileDataViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        current = this
         setContentView(binding.root)
         postViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             PostViewModel::class.java)
@@ -33,5 +34,11 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNavigationView?.setupWithNavController(navController)
+    }
+    fun refresh(){
+        this.onResume()
+    }
+    companion object{
+        lateinit var current : MainActivity
     }
 }

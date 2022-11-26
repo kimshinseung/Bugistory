@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.anp56.bugistory.MainActivity
 import com.anp56.bugistory.PostViewerActivity
 import com.anp56.bugistory.R
 import com.anp56.bugistory.databinding.ItemPostRecyclerViewBinding
@@ -67,10 +68,19 @@ class PostAdapter(private val context : Context,private val posts : List<PostDat
                     holder.binding.likeCount.text = post.like.size.toString()
                 }
         }
-
+        holder.binding.deleteMenu.setOnClickListener {
+            if (Firebase.auth.uid == post.uid) {
+                postCollectionRef.document(post.id).delete()
+                context.startActivity(Intent(context,MainActivity::class.java))
+                Toast.makeText(context,"게시글이 삭제되었습니다.",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(context,"글 작성자가 아닙니다.",Toast.LENGTH_SHORT).show()
+            }
+        }
         holder.binding.commentButton.setOnClickListener {
             PostViewerActivity.currentPost = post
-            context.startActivity(Intent(context,PostViewerActivity::class.java))
+            MainActivity.current.refresh()
         }
     }
 
