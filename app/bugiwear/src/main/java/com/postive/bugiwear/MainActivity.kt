@@ -28,6 +28,9 @@ class MainActivity : Activity() {
         binding.settingButton.setOnClickListener {
             startActivity(Intent(this,SettingActivity::class.java))
         }
+        binding.refreshButton.setOnClickListener {
+            updatePostList()
+        }
     }
 
     override fun onResume() {
