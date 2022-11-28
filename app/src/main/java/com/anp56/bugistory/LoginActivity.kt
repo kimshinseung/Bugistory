@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 println("Login Task occur")
                 if(it.isSuccessful){
-                    Toast.makeText(this, "로그인에 성공ㅗ하였습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                     startActivity(
                         Intent(this,MainActivity::class.java)
                     )
