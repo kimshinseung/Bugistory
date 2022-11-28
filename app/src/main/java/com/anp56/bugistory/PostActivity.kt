@@ -32,6 +32,10 @@ class PostActivity : AppCompatActivity() {
         }
         //완료 버튼
         binding.completeButton.setOnClickListener{
+            if(binding.content.text.isBlank()){
+                Toast.makeText(this,"내용이 없어 작성이 불가능합니다.",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val content= binding.content.text.toString()
             val uid=Firebase.auth.uid
             val time = System.currentTimeMillis()
