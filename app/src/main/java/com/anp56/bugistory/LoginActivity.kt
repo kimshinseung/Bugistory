@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         Firebase.auth.signInWithEmailAndPassword(id,pass)
             .addOnCompleteListener(this) {
                 println("Login Task occur")
-                
+
                 if(it.isSuccessful){
                     Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                     startActivity(
