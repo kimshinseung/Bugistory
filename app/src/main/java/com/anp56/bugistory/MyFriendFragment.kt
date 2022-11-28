@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.anp56.bugistory.databinding.FragmentMyFriendBinding
 import com.anp56.bugistory.friend.FriendData
 import com.anp56.bugistory.friend.FriendsAdapter
@@ -39,9 +40,10 @@ class MyFriendFragment : Fragment() {
     }
     private fun createFriendList(){
         val friendsList = mutableListOf<FriendData>()
+        binding.recyclerView.adapter = FriendsAdapter(friendsList)
         userdataCollectionRef.document(Firebase.auth.uid.toString()).get()
             .addOnSuccessListener {
-                var friendUidList = it.get("friends") as List<String>
+                val friendUidList = it.get("friends") as List<String>
                 for (friendUid in friendUidList ){
                     userdataCollectionRef.document(friendUid).get().addOnSuccessListener { data ->
                         friendsList.add(
