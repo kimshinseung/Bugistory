@@ -15,8 +15,7 @@ import com.postive.bugiwear.databinding.ItemPostRecyclerViewBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PostAdapter(private val context : Context, private val posts : List<PostData>) :
-    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private val context : Context, private val posts : List<PostData>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private val db: FirebaseFirestore = Firebase.firestore
     private val postCollectionRef = db.collection("post")
     inner class PostViewHolder(val binding : ItemPostRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)

@@ -53,5 +53,15 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintBottom_toBottomOf="parent"/>
+        <Button
+            android:id="@+id/add_post"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="+"
+            android:background="@drawable/round_white_rect"
+            android:textColor="@color/default_dark_ui_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.wear.widget.BoxInsetLayout>

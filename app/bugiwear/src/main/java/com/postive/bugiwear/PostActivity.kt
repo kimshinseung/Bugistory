@@ -1,0 +1,52 @@
+package com.postive.bugiwear
+
+import android.app.Activity
+import android.os.Bundle
+import android.widget.Toast
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.postive.bugiwear.databinding.ActivityPostBinding
+
+class PostActivity : Activity() {
+
+    private lateinit var binding: ActivityPostBinding
+    private val db: FirebaseFirestore = Firebase.firestore
+    private val postCollectionRef = db.collection("post")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityPostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //완료 버튼
+        binding.postButton.setOnClickListener{
+            if(binding.content.text.isBlank()){
+                Toast.makeText(this,"내용이 없어 작성이 불가능합니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val content= binding.content.text.toString()
+            val uid= Firebase.auth.uid
+            val time = System.currentTimeMillis()
+            val like= mutableListOf<String>()
+            val comment= mutableListOf<Map<String,String>>()
+            val postinf= hashMapOf(
+                "content" to content,
+                "uid" to uid,
+                "time" to time,
+                "like" to like,
+                "comment" to comment,
+                "see" to "-ALL-"
+            )
+            postCollectionRef.document().set(postinf).addOnSuccessListener {
+                Toast.makeText(this,"게시물 작성했습니다.", Toast.LENGTH_SHORT).show()
+                super.onBackPressed()
+            }.addOnFailureListener{
+                Toast.makeText(this,"게시물 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                super.onBackPressed()
+            }
+
+        }
+
+    }
+}

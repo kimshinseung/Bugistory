@@ -7,4 +7,8 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_my_profile">MyProfileActivity</string>
+    <string name="title_activity_my_friends">MyFriendsActivity</string>
+    <string name="title_activity_user_post_list">UserPostListActivity</string>
+    <string name="title_activity_post">PostActivity</string>
 </resources>

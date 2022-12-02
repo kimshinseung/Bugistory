@@ -24,5 +24,13 @@ class SettingActivity : Activity() {
             startActivity(intent)
             finish()
         }
+        binding.friendListButton.setOnClickListener {
+            val intent = Intent(this,MyFriendsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.profileButton.setOnClickListener {
+            val intent = Intent(this,MyProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

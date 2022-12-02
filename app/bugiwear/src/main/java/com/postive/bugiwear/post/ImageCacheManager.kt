@@ -42,8 +42,25 @@ class ImageCacheManager {
         }
         fun updateImage() {
             for (uid in cache.keys){
-                requestImage(uid)
+                var bmp : Bitmap? = null
+                storage.reference.child("photo").child("$uid.png").getBytes(Long.MAX_VALUE).addOnSuccessListener {
+                    bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                    cache[uid] = bmp!!
+                }
             }
+        }
+        fun updateTargetImage(uid : String,target : ImageView? = null) : Bitmap?{
+            var bmp : Bitmap? = null
+            storage.reference.child("photo").child("$uid.png").getBytes(Long.MAX_VALUE).addOnSuccessListener {
+                bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                cache[uid] = bmp!!
+                target?.setImageBitmap(bmp)
+            }
+                .addOnFailureListener {
+                    Log.d("Image","Profile doesn't exist")
+                    bmp = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.default_user_image)
+                }
+            return bmp
         }
     }
 }

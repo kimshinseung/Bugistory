@@ -1,64 +1,39 @@
 package com.postive.bugiwear
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
-import com.postive.bugiwear.post.PostAdapter
-import com.postive.bugiwear.post.PostData
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.postive.bugiwear.databinding.ActivityMainBinding
-import com.postive.bugiwear.post.ImageCacheManager
+import com.google.firebase.storage.FirebaseStorage
+import com.postive.bugiwear.databinding.ActivityUserPostListBinding
+import com.postive.bugiwear.post.PostAdapter
+import com.postive.bugiwear.post.PostData
 
-class MainActivity : Activity() {
+class UserPostListActivity : Activity() {
     private val db: FirebaseFirestore = Firebase.firestore
     private val  postCollectionRef = db.collection("post")
     private val userCollectionRef = db.collection("userdata")
-    private lateinit var binding: ActivityMainBinding
-    private val postDataList = mutableListOf<PostData>()
+    private lateinit var binding: ActivityUserPostListBinding
+    lateinit var frienduid:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityUserPostListBinding.inflate(layoutInflater)
+        frienduid = intent.getStringExtra("uid")+""
         setContentView(binding.root)
-
-        userCollectionRef.get().addOnSuccessListener {
-            for (data in it){
-                ImageCacheManager.requestImage(data.id)
-            }
-        }
-
-        binding.addPost.setOnClickListener {
-            val intent = Intent(this,PostActivity::class.java)
-            startActivity(intent)
-        }
-        binding.postList.adapter = PostAdapter(this, mutableListOf())
-        updatePostList()
-        binding.settingButton.setOnClickListener {
-            startActivity(Intent(this,SettingActivity::class.java))
-        }
-        binding.refreshButton.setOnClickListener {
-            updatePostList()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        ImageCacheManager.updateImage()
         updatePostList()
     }
     private fun updatePostList(){
-
-        postCollectionRef.whereIn("see", arrayListOf("-ALL-", Firebase.auth.uid)).get().addOnSuccessListener {
+        postCollectionRef.whereEqualTo("uid",frienduid).whereEqualTo("see","-ALL-").get().addOnSuccessListener {
             val postList = mutableListOf<PostData>()
             for (data in it){
                 try {
                     val postData = PostData(
                         data.id,
                         data.get("uid").toString(),
-                        "알수없음",
+                        "알 수 없음",
                         data.get("time").toString(),
                         data.get("content").toString(),
                         (data.get("like") as MutableList<String>),
@@ -78,11 +53,14 @@ class MainActivity : Activity() {
                         }
                 }
                 catch (_ : Exception){
+                    Log.d("Update Post","Post data parse failed.")
                 }
+
             }
         }
             .addOnFailureListener {
                 Toast.makeText(this, "불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                it.printStackTrace()
             }
     }
 }
